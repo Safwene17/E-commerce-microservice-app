@@ -1,4 +1,4 @@
-package org.example.order.enums;
+package org.example.order.order;
 
 public enum PaymentMethod {
     PAYPAL,

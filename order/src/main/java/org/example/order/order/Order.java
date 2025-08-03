@@ -1,8 +1,8 @@
-package org.example.order.entities;
+package org.example.order.order;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.order.enums.PaymentMethod;
+import org.example.order.orderline.OrderLine;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

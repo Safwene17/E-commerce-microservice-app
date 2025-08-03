@@ -1,7 +1,8 @@
-package org.example.order.entities;
+package org.example.order.orderline;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.order.order.Order;
 
 @AllArgsConstructor
 @NoArgsConstructor
