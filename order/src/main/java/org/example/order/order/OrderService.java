@@ -9,6 +9,8 @@ import org.example.order.kafka.OrderConfirmation;
 import org.example.order.kafka.OrderProducer;
 import org.example.order.orderline.OrderLineRequest;
 import org.example.order.orderline.OrderLineService;
+import org.example.order.payment.PaymentClient;
+import org.example.order.payment.PaymentRequest;
 import org.example.order.product.ProductClient;
 import org.example.order.product.PurchaseRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(@Valid OrderRequest request) {
 
@@ -52,6 +55,14 @@ public class OrderService {
         }
 
         //starting payment process
+        var paymentRequest = new PaymentRequest(
+            request.amount(),
+            request.paymentMethod(),
+            order.getId(),
+            order.getReference(),
+            customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         //sending confirmation email to notification microservice (kafka)
         orderProducer.sendOrderConfirmation(
