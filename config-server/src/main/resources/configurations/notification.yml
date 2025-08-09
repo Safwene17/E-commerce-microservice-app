@@ -1,0 +1,37 @@
+spring:
+  data:
+    mongodb:
+      username: postgres
+      password: safwene17
+      host: localhost
+      port: 27017
+      database: notification
+      authentication-database: admin
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: paymentGroup, orderGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.type.mapping: orderConfirmation:org.example.order.kafka.OrderConfirmation, paymentConfirmation:org.ecommerce.payment.notification.kafka.notification.PaymentNotificationRequest
+  mail:
+    host: localhost
+    port: 1025
+    username: safwene
+    password: safwene17
+    protocol:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connection-timeout: 5000
+        timeout: 3000
+        write-timeout: 5000
+
+server:
+    port: 8040
