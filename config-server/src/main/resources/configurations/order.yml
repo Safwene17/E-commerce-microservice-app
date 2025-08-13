@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
   datasource:
     url : jdbc:postgresql://localhost:5432/order
     username: postgres
@@ -10,7 +8,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   kafka:
     producer:
       bootstrap-servers: localhost:9092

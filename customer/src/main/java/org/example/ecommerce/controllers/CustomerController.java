@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.ecommerce.dto.CustomerRequest;
 import org.example.ecommerce.dto.CustomerResponse;
-import org.example.ecommerce.entites.Customer;
 import org.example.ecommerce.services.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class CustomerController {
     private final CustomerService service;
 
     @PostMapping
-    public ResponseEntity<String> createCustomer(
+    public ResponseEntity<Integer> createCustomer(
             @RequestBody @Valid CustomerRequest request
     ) {
         // Logic to create a customer
@@ -38,17 +37,17 @@ public class CustomerController {
     }
 
     @GetMapping("/exists/{customer-id}")
-    public ResponseEntity<Boolean> existsById(@PathVariable("customer-id") String customerId) {
+    public ResponseEntity<Boolean> existsById(@PathVariable("customer-id") Integer customerId) {
         return ResponseEntity.ok(service.existsById(customerId));
     }
 
     @GetMapping("/{customer-id}")
-    public ResponseEntity<CustomerResponse> findById(@PathVariable("customer-id") String customerId) {
+    public ResponseEntity<CustomerResponse> findById(@PathVariable("customer-id") Integer customerId) {
         return ResponseEntity.ok(service.findById(customerId));
     }
 
     @DeleteMapping("/{customer-id}")
-    public ResponseEntity<Void> delete(@PathVariable("customer-id") String customerId) {
+    public ResponseEntity<Void> delete(@PathVariable("customer-id") Integer customerId) {
         service.delete(customerId);
         return ResponseEntity.noContent().build();
     }

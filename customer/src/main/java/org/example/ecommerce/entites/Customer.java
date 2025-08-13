@@ -1,20 +1,22 @@
 package org.example.ecommerce.entites;
 
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document
+@Entity
 @Setter
 @Getter
 public class Customer {
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String firstname;
     private String lastname;
     private String email;
+    @Embedded
     private Address address;
 }

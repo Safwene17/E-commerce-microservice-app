@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: customer-service
+              uri: lb://CUSTOMER
+              predicates:
+                - Path=/api/v1/customers/**
+
+            - id: order-service
+              uri: lb://ORDER
+              predicates:
+                - Path=/api/v1/orders/**
+
+            - id: order-lines-service
+              uri: lb://ORDER
+              predicates:
+                - Path=/api/v1/order-lines/**
+
+            - id: product-service
+              uri: lb://PRODUCT
+              predicates:
+                - Path=/api/v1/products/**
+
+            - id: payment-service
+              uri: lb://PAYMENT
+              predicates:
+                - Path=/api/v1/payments/**
+server:
+  port: 8222

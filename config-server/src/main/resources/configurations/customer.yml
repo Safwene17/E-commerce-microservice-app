@@ -1,11 +1,13 @@
 spring:
-  data:
-    mongodb:
-      username: mongodb
-      password: safwene17
-      host: localhost
-      port: 27017
-      database: customer
-      authentication-database: admin
+  datasource:
+    url : jdbc:postgresql://localhost:5432/customer
+    username: postgres
+    password: safwene17
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    hibernate:
+      ddl-auto: update
 server:
   port: 8090

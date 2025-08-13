@@ -31,55 +31,67 @@ services:
     restart: unless-stopped
 
   mongodb:
-    container_name: ms_mongo_db
+    container_name: mongo_db
     image: mongo
     ports:
-        - 27017:27017
+      - 27017:27017
     volumes:
-        - mongo:/data
+      - mongo:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_USERNAME: mongodb
       MONGO_INITDB_ROOT_PASSWORD: safwene17
+      MONGO_INITDB_DATABASE: admin
+    networks:
+      - microservices-net
+    restart: unless-stopped
 
   mongo-express:
-    container_name: ms_mongo_express
+    container_name: mongo_express
     image: mongo-express
-    restart: unless-stopped
+    restart: always
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongodb
       ME_CONFIG_MONGODB_ADMINPASSWORD: safwene17
-      ME_CONFIG_MONGODB_SERVER: ms_mongo_db
-      ME_CONFIG_BASICAUTH: "false"
-
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - 22181:2181
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:safwene17@mongodb:27017/
     networks:
       - microservices-net
+    depends_on:
+      - mongodb
+
+
+  #  zookeeper:
+#    image: confluentinc/cp-zookeeper:latest
+#    container_name: zookeeper
+#    environment:
+#      ZOOKEEPER_SERVER_ID: 1
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#    ports:
+#      - 22181:2181
+#    networks:
+#      - microservices-net
 
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: ms_kafka
     ports:
-        - 9092:9092
-    depends_on:
-      - zookeeper
+      - 9092:9092
+#    depends_on:
+#      - zookeeper
     environment:
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - microservices-net
 
