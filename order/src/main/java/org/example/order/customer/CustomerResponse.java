@@ -1,7 +1,7 @@
 package org.example.order.customer;
 
 public record CustomerResponse(
-        String id,
+        Integer id,
         String firstname,
         String lastname,
         String email

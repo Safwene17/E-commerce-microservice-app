@@ -1,10 +1,9 @@
 package org.ecommerce.notification.notification;
 
+import jakarta.persistence.*;
 import lombok.*;
 import org.ecommerce.notification.kafka.order.OrderConfirmation;
 import org.ecommerce.notification.kafka.payment.PaymentConfirmation;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -13,13 +12,16 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
+@Entity
 public class Notification {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private NotificationType type;
     private LocalDateTime notificationDate;
+    @Transient
     private OrderConfirmation orderConfirmation;
+    @Transient
     private PaymentConfirmation paymentConfirmation;
 }

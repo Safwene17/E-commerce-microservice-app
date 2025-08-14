@@ -1,7 +1,6 @@
 package org.example.order.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.order.exception.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 //must use @Validated in order to use a complex object like customer in PaymentRequest
 @Validated
 public record Customer(
-        String id,
+        Integer id,
         @NotNull(message = "Firstname cannot be null")
         String firstname,
         @NotNull(message = "Lastname cannot be null")

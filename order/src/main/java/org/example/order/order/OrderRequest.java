@@ -21,9 +21,7 @@ public record OrderRequest(
         PaymentMethod paymentMethod,
 
         @NotNull(message = "Customer ID cannot be null")
-        @NotEmpty(message = "Customer ID cannot be empty")
-        @NotBlank(message = "Customer ID cannot be blank")
-        String customerId,
+        Integer customerId,
 
         @NotEmpty(message = "you should at least purchase one product")
         List<PurchaseRequest> products

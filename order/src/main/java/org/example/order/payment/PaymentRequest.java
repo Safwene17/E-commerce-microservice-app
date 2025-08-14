@@ -9,7 +9,7 @@ public record PaymentRequest(
         BigDecimal amount,
         PaymentMethod paymentMethod,
         Integer orderId,
-        String customerReference,
-        CustomerResponse response
+        String orderReference,
+        CustomerResponse customer
 ) {
 }

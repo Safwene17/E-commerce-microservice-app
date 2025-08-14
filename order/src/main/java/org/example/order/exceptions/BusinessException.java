@@ -1,4 +1,4 @@
-package org.example.order.exception;
+package org.example.order.exceptions;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

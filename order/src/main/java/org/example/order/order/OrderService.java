@@ -1,10 +1,11 @@
 package org.example.order.order;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.order.customer.CustomerClient;
-import org.example.order.exception.BusinessException;
+import org.example.order.exceptions.BusinessException;
 import org.example.order.kafka.OrderConfirmation;
 import org.example.order.kafka.OrderProducer;
 import org.example.order.orderline.OrderLineRequest;
@@ -29,12 +30,13 @@ public class OrderService {
     private final OrderProducer orderProducer;
     private final PaymentClient paymentClient;
 
+    @Transactional
     public Integer createOrder(@Valid OrderRequest request) {
 
         //Checking the customer
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("cannot create order: No customer found with id: " + request.customerId()));
-
+        System.out.println("Customer found: " + customer);
         //purchasing products
         var purchasedProducts = this.productClient.purchaseProducts(request.products());
 

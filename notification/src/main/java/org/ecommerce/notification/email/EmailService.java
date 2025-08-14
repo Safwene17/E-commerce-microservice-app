@@ -47,6 +47,7 @@ public class EmailService {
         variables.put("customerName", customerName);
         variables.put("amount", amount);
         variables.put("orderReference", orderReference);
+
         Context context = new Context();
         context.setVariables(variables);
         messageHelper.setSubject(PAYMENT_CONFIRMATION.getSubject());
@@ -78,7 +79,7 @@ public class EmailService {
 
         Map<String, Object> variables = new HashMap<>();
         variables.put("customerName", customerName);
-        variables.put("total amount", amount);
+        variables.put("amount", amount);
         variables.put("orderReference", orderReference);
         variables.put("products", products);
 
