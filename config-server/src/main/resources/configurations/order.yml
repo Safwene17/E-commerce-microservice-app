@@ -27,3 +27,8 @@ application:
     payment-url: http://localhost:8222/api/v1/payments
 
 
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

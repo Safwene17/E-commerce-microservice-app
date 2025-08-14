@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9098/realms/micro-services"
   cloud:
     gateway:
       server:
@@ -30,3 +35,9 @@ spring:
                 - Path=/api/v1/payments/**
 server:
   port: 8222
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

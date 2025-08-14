@@ -17,3 +17,9 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.type.mapping: paymentConfirmation:org.ecommerce.payment.notification.PaymentNotificationRequest
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
